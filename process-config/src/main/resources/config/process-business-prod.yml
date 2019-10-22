@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/process_business?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: mysql@123
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: AUTHCENTER-HIKAIRCP
+      connection-timeout: 50000
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      password: rds
+      timeout: 10s
+      lettuce:
+        pool:
+          min-idle: 0
+          max-idle: 8
+          max-active: 8
+          max-wait: -1ms
+
+server:
+  port: 0
+  servlet:
+    context-path: /business
+
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8000/auth/api/sec/principal
+      prefer-token-info: false

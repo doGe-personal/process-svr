@@ -1,0 +1,102 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+
+}
+
+group 'com.process'
+version '1.0-SNAPSHOT'
+
+allprojects {
+
+    apply plugin: 'idea'
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        mavenCentral()
+    }
+
+    ext {
+        springCloudVersion = 'Finchley.SR1'
+        appRunArgs = [
+                'APP_PROFILE_DEF': 'dev',
+        ]
+    }
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    compileJava {
+        options.compilerArgs << '-Xlint:unchecked'
+        options.compilerArgs << '-Xlint:deprecation'
+    }
+
+    bootRun {
+        systemProperty "spring.profiles.active", 'dev'
+        (appRunArgs as Map<String, String>).each {
+            k, v -> systemProperty(k, v)
+        }
+    }
+
+    dependencies {
+        compile('org.springframework.boot:spring-boot-starter-web')
+        compileOnly("org.projectlombok:lombok:1.18.4")
+        annotationProcessor("org.projectlombok:lombok:1.18.4")
+        compile("org.springframework.boot:spring-boot-starter")
+        compile("org.springframework.boot:spring-boot-starter-actuator")
+        compile("org.springframework.boot:spring-boot-starter-data-redis")
+        compile("com.alibaba:fastjson:1.2.47")
+        compile('org.apache.commons:commons-pool2')
+        compile('org.mybatis.spring.boot:mybatis-spring-boot-starter:+')
+        runtime('mysql:mysql-connector-java:8.0.13')
+        runtime("org.springframework.boot:spring-boot-properties-migrator")
+        testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: '1.5.14.RELEASE'
+        testCompileOnly("org.projectlombok:lombok:1.18.4")
+        testAnnotationProcessor("org.projectlombok:lombok:1.18.4")
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    // java编译的时候缺省状态下会因为中文字符而失败
+    [compileJava,compileTestJava,javadoc]*.options*.encoding = 'UTF-8'
+
+    // 定义依赖:声明项目中需要哪些依赖
+    dependencies {
+        compile fileTree(dir: 'lib', exclude:'', include: '*.jar')
+    }
+
+    // 全局设置依赖配置
+    configurations {
+        providedRuntime
+    }
+
+}
+
+// 配置所有子模块
+subprojects {
+    //指定目录结构
+    sourceSets {
+        main {
+            java{
+                srcDir 'src/main/java'
+            }
+            resources {
+                srcDir 'src/main/java'
+                srcDir 'src/main/resources'
+            }
+        }
+    }
+}

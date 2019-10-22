@@ -1,0 +1,23 @@
+security:
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8000/auth/api/sec/principal
+      prefer-token-info: false
+    client:
+      client-id: process_zuul
+      client-secret: password
+
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+app:
+  tenant:
+    enabled: true
+    tenantId: process_zuul
+    tenantColumn: TENANT_ID
+    tenantColumnType: String
+    tenantInsertEnabled: true
+    tenantDeleteEnabled: true
+    tenantUpdateEnabled: true
+    tenantSelectEnabled: true

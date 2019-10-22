@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: process-config
+  profiles:
+    include: native
+  output:
+    ansi:
+      enabled: detect #多彩输出日志
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/config
+#        git:
+#          uri: https://github.com/DDDLLLweb/process-config.git
+#          username: danfeng_online@163.com
+#          password: 502139ddf
+#          search-paths: '*{application}*' #使用占位符的形式进行目录搜索
+server:
+  port: 9090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

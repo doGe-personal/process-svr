@@ -1,0 +1,77 @@
+spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10s
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+
+server:
+  port: 9001
+  servlet:
+    context-path: /process
+
+zuul:
+  ignoredServices: '*'
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+   auth-center:
+     path: /auth/**
+     serviceId: process-auth
+   backend-server:
+     path: /business/**
+     serviceId: process-business
+     stripPrefix: false
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  add-proxy-headers: true
+  ribbon:
+    eager-load:
+      enabled: true
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 100000
+        readTimeout: 100000
+        loggerLevel: FULL # NONE: 不记录信息, BASIC:仅记录请求方法，URL以及
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  # hystrix:
+  #   enabled: true  
+  
+ps:
+  security:
+    cors:  
+      allowCredentials: true
+      allowedOrigins: "*"
+      allowedHeader: "*"
+      allowedMethods: "*"
+      maxAge: 1800
+      allow: "*"
+      path: "/**"
+    csrf: 
+      enable: false
+    oauth2:
+      clientId: ps_zuul_center
+      clientSecret: password
+      defaultSecret: false
+      
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000

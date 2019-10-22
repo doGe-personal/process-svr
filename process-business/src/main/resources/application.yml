@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ${app.tenant.tenantId}
+
+mybatis:
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+app:
+  tenant:
+    enabled: true
+    tenantId: process-business-0002
+    tenantColumn: TENANT_ID
+    tenantColumnType: String
+    tenantInsertEnabled: true
+    tenantDeleteEnabled: true
+    tenantUpdateEnabled: true
+    tenantSelectEnabled: true

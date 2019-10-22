@@ -1,0 +1,31 @@
+
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.process-svr'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.1'
+	compile 'org.projectlombok:lombok'
+	runtime 'mysql:mysql-connector-java'
+	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.9'
+	compile group: 'commons-codec', name: 'commons-codec', version: '1.10'
+	compile group: 'redis.clients', name: 'jedis', version: '3.1.0'
+	compile group: 'com.google.guava', name: 'guava', version: '28.1-jre'
+	compile("org.springframework.boot:spring-boot-starter-data-redis")
+	compile 'org.redisson:redisson:3.11.4'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	compile 'com.baomidou:mybatis-plus-boot-starter:3.1.1'
+}

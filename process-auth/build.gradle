@@ -1,0 +1,14 @@
+project.group = 'process'
+project.archivesBaseName = 'process-auth'
+project.version = 'latest'
+
+dependencies {
+    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    implementation('org.springframework.cloud:spring-cloud-config-client')
+    implementation('org.springframework.cloud:spring-cloud-starter-oauth2') {
+        exclude group: 'org.springframework.security.oauth', module: 'spring-security-oauth2'
+    }
+    implementation('org.springframework.security.oauth:spring-security-oauth2:2.3.3.RELEASE')
+    implementation('org.springframework.cloud:spring-cloud-starter-openfeign')
+    compile project(":process-common")
+}

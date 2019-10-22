@@ -1,0 +1,9 @@
+rootProject.name = 'process-svr'
+include 'process-auth'
+include 'process-business'
+include 'process-common'
+include 'process-config'
+include 'process-eureka'
+include 'process-zuul'
+include 'process-learn'
+

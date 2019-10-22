@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: process-eureka
+  output:
+    ansi:
+      enabled: detect #多彩输出日志
+
+server:
+  port: 8761
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    lease-expiration-duration-in-seconds: 15
+    lease-renewal-interval-in-seconds: 5
+    instance-id: ${spring.application.name}:${server.port}
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:${server.port}/eureka/
+    register-with-eureka: false
+    fetch-registry: false
+    registry-fetch-interval-seconds: 5
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

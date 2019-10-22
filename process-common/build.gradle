@@ -1,0 +1,12 @@
+
+archivesBaseName = "process-common"
+
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
+    baseName = 'commons'
+    version =  '1.0.0'
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+    <appender name="LOG_FILE"
+              class="ch.qos.logback.core.FileAppender">
+        <encoder>
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+        </encoder>
+        <file>./logs/dev/backend-dev.log</file>
+        <append>true</append>
+    </appender>
+    <logger name="com.process.business" level="debug"/>
+
+    <root level="INFO">
+        <appender-ref ref="LOG_FILE"/>
+        <appender-ref ref="CONSOLE"/>
+    </root>
+</included>

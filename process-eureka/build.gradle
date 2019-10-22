@@ -1,0 +1,7 @@
+project.group = 'process'
+project.archivesBaseName = 'process-eureka'
+project.version = 'latest'
+
+dependencies {
+    implementation('org.springframework.cloud:spring-cloud-starter-netflix-eureka-server')
+}

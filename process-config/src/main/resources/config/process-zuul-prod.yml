@@ -1,0 +1,83 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/process_zuul?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: mysql@123
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      minimum-idle: 5
+      maximum-pool-size: 20
+      connection-test-query: SELECT 1
+      auto-commit: true
+      idle-timeout: 30000
+      pool-name: AUTHCENTER-HIKAIRCP
+      connection-timeout: 50000
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 10s
+    lettuce:
+      pool:
+        min-idle: 0
+        max-idle: 8
+        max-active: 8
+        max-wait: -1ms
+
+server:
+  port: 9001
+
+zuul:
+  ignoredServices: '*'
+  sensitiveHeaders: Cookie,Set-Cookie
+  routes:
+    process-auth:
+      path: /auth/**
+      serviceId: process-auth
+    process-business:
+      path: /business/**
+      serviceId: process-business
+      stripPrefix: false
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+  add-proxy-headers: true
+  ribbon:
+    eager-load:
+      enabled: true
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 100000
+        readTimeout: 100000
+        loggerLevel: FULL # NONE: 不记录信息, BASIC:仅记录请求方法，URL以及
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+
+ps:
+  security:
+    cors:
+      allowCredentials: true
+      allowedOrigins: "*"
+      allowedHeader: "*"
+      allowedMethods: "*"
+      maxAge: 1800
+      allow: "*"
+      path: "/**"
+    csrf:
+      enable: false
+
+ribbon:
+  ReadTimeout: 10000
+  ConnectTimeout: 10000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
